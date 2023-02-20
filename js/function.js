@@ -1,40 +1,35 @@
 //Функция для проверки длины строки
-function verifyLength (str, length) {
-  if (str.length <= length) {
-    return true;
-  }
-  return false;
-}
-verifyLength('проверяемая строка', 20); //true
+const verifyLength = (str, length) => str.length <= length;
+verifyLength('проверяемая строка', 20);
 
 //Функция для проверки, является ли строка палиндромом.
 function isPalindrome (str) {
   str = str.toLowerCase().replaceAll(' ','');
-  for (let i = 1; i <= str.length / 2; i++) {
-    if (str[i - 1] === str[str.length - i]){
-      return true;
+  let reverseString = '';
+  if (str.length > 1) {
+    for (let i = str.length - 1; i >= 0; i--) {
+      reverseString += str[i];
     }
-    return false;
+    return str === reverseString;
   }
+  return false;
 }
 isPalindrome('топот'); //true
+isPalindrome('f'); //false
 
 /*Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа.
 Если в строке нет ни одной цифры, функция должна вернуть NaN
 */
-function returnNumber (str) {
+function extractNumber (str) {
   let answer = '';
   for (let i = 0; i < str.length; i++) {
-    if (Number(str[i]) || str[i] === '0') {
+    if (!Number.isNaN(parseInt(str[i], 10))) {
       answer += str[i];
     }
   }
-  if (answer === '') {
-    return NaN;
-  }
-  return Number(answer);
+  return +answer;
 }
-returnNumber('ECMAScript 2022'); // 2022
+extractNumber('ECMAScript 2022'); // 2022
 
 
 /*Функция, которая принимает три параметра:
@@ -48,19 +43,18 @@ returnNumber('ECMAScript 2022'); // 2022
 function addString (stringBasic, stringLength, stringAdditional) {
   if (stringBasic.length >= stringLength) {
     return stringBasic;
-  } else {
-    let answer = '';
-    let subtotal = '';
-    while (answer.length !== stringLength - stringBasic.length) {
-      subtotal = stringAdditional + answer;
-      if (subtotal.length <= stringLength - stringBasic.length) {
-        answer = subtotal;
-      } else {
-        answer = stringAdditional.slice(0, stringLength - stringBasic.length - answer.length) + answer;
-        break;
-      }
-    }
-    return answer + stringBasic;
   }
+  let answer = '';
+  let subtotal = '';
+  const vacancy = stringLength - stringBasic.length;
+  while (answer.length !== vacancy) {
+    subtotal = stringAdditional + answer;
+    if (subtotal.length <= vacancy) {
+      answer = subtotal;
+    }
+    answer = stringAdditional.slice(0, vacancy - answer.length) + answer;
+    break;
+  }
+  return answer + stringBasic;
 }
 addString('1', 4, '0'); //'0001'
