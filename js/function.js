@@ -3,7 +3,7 @@ const verifyLength = (str, length) => str.length <= length;
 verifyLength('проверяемая строка', 20);
 
 //Функция для проверки, является ли строка палиндромом.
-function isPalindrome (str) {
+const isPalindrome = (str) => {
   str = str.toLowerCase().replaceAll(' ','');
   let reverseString = '';
   if (str.length > 1) {
@@ -13,25 +13,26 @@ function isPalindrome (str) {
     return str === reverseString;
   }
   return false;
-}
+};
 isPalindrome('топот'); //true
 isPalindrome('f'); //false
 
 /*Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа.
 Если в строке нет ни одной цифры, функция должна вернуть NaN
 */
-function extractNumber (str) {
+const extractNumber = (str) => {
+  let usedStr = str;
   let answer = '';
   if (typeof str === 'number') {
-    str = str.toString();
+    usedStr = str.toString();
   }
-  for (let i = 0; i < str.length; i++) {
-    if (!Number.isNaN(parseInt(str[i], 10))) {
-      answer += str[i];
+  for (let i = 0; i < usedStr.length; i++) {
+    if (!Number.isNaN(parseInt(usedStr[i], 10))) {
+      answer += usedStr[i];
     }
   }
-  return +answer;
-}
+  return +answer || NaN;
+};
 extractNumber('ECMAScript 2022'); // 2022
 
 
@@ -43,7 +44,7 @@ extractNumber('ECMAScript 2022'); // 2022
 Если исходная строка превышает заданную длину, она не должна обрезаться.
 Если «добивка» слишком длинная, она обрезается с конца.
 */
-function addString (stringBasic, stringLength, stringAdditional) {
+const addString = (stringBasic, stringLength, stringAdditional) => {
   if (stringBasic.length >= stringLength) {
     return stringBasic;
   }
@@ -59,5 +60,5 @@ function addString (stringBasic, stringLength, stringAdditional) {
     break;
   }
   return answer + stringBasic;
-}
+};
 addString('1', 4, '0'); //'0001'
