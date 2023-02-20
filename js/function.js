@@ -22,6 +22,9 @@ isPalindrome('f'); //false
 */
 function extractNumber (str) {
   let answer = '';
+  if (typeof str === 'number') {
+    str = str.toString();
+  }
   for (let i = 0; i < str.length; i++) {
     if (!Number.isNaN(parseInt(str[i], 10))) {
       answer += str[i];
