@@ -35,6 +35,6 @@ const createInfo = () => {
   };
 };
 const infoCount = 25;
-const photoDescription = Array.from({length: infoCount}, createInfo);
+const photoDescription = () => Array.from({length: infoCount}, createInfo);
 
 export {photoDescription};
