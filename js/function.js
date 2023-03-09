@@ -4,16 +4,15 @@ verifyLength('проверяемая строка', 20);
 
 //Функция для проверки, является ли строка палиндромом.
 const isPalindrome = (str) => {
-  let usedStr = str;
-  usedStr = str.toLowerCase().replaceAll(' ','');
+  const usedStr = str.toLowerCase().replaceAll(' ','');
   let reverseString = '';
-  if (usedStr.length > 1) {
-    for (let i = usedStr.length - 1; i >= 0; i--) {
-      reverseString += usedStr[i];
-    }
-    return usedStr === reverseString;
+  if (usedStr.length <= 1) {
+    return false;
   }
-  return false;
+  for (let i = usedStr.length - 1; i >= 0; i--) {
+    reverseString += usedStr[i];
+  }
+  return usedStr === reverseString;
 };
 isPalindrome('топот'); //true
 isPalindrome('f'); //false
