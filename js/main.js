@@ -1,2 +1,2 @@
-import {photoDescription} from './data.js';
-photoDescription();
+import {createPhotoDescription} from './data.js';
+createPhotoDescription();

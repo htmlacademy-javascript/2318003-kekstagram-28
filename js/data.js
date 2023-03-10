@@ -20,7 +20,7 @@ const createCommentObject = () => {
   };
 };
 
-const createInfo = () => {
+const createPhotoInfo = () => {
   const commentsCount = getRandomInteger(1, 40);
   const comments = Array.from({length: commentsCount}, createCommentObject);
   const infoDescription = getRandomArrayElement(DESCRIPTIONS);
@@ -34,7 +34,7 @@ const createInfo = () => {
     comments
   };
 };
-const infoCount = 25;
-const photoDescription = () => Array.from({length: infoCount}, createInfo);
+const INFO_COUNT = 25;
+const createPhotoDescription = () => Array.from({length: INFO_COUNT}, createPhotoInfo);
 
-export {photoDescription};
+export {createPhotoDescription};
