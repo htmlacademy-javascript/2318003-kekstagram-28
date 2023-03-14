@@ -1,19 +1,22 @@
-import {createPhotoDescription} from './data.js';
+const createPicture = (picture) => {
+  const pictureTemplate = document.querySelector('#picture').content;
 
-const insertionPicturePoint = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
-
-const createdPictures = createPhotoDescription();
-
-const photosFragment = document.createDocumentFragment();
-
-createdPictures.forEach(({url, description, likes, comments}) => {
   const createdPicture = pictureTemplate.cloneNode(true);
-  createdPicture.querySelector('.picture__img').src = url;
-  createdPicture.querySelector('.picture__img').alt = description;
-  createdPicture.querySelector('.picture__likes').textContent = likes;
-  createdPicture.querySelector('.picture__comments').textContent = comments.length;
-  insertionPicturePoint.append(createdPicture);
-});
+  createdPicture.querySelector('.picture__img').src = picture.url;
+  createdPicture.querySelector('.picture__likes').textContent = picture.likes;
+  createdPicture.querySelector('.picture__comments').textContent = picture.comments.length;
+  return createdPicture;
+};
 
-insertionPicturePoint.append(photosFragment);
+
+const renderPictures = (insertionPictures) => {
+  const insertionPicturePoint = document.querySelector('.pictures');
+  const photosFragment = document.createDocumentFragment();
+  insertionPictures.forEach((element) => {
+    insertionPicturePoint.append(createPicture(element));
+  });
+  insertionPicturePoint.append(photosFragment);
+  return insertionPicturePoint;
+};
+
+export {renderPictures};
