@@ -1,2 +1,4 @@
 import {createPhotoDescription} from './data.js';
-createPhotoDescription();
+const insertionPictures = createPhotoDescription();
+import {renderPictures} from './miniature.js';
+renderPictures(insertionPictures);
