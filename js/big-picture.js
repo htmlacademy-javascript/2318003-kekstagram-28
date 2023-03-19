@@ -1,3 +1,4 @@
+//const body =
 const insertionPicturePoint = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureInfo = document.querySelector('.big-picture__social');
@@ -23,23 +24,27 @@ const createComments = (data) => {
 const openBigPicture = (item) => {
   bigPicture.classList.remove('hidden');
   commentsContainer.innerHTML = '';
+  bigPicture.classList.add('modal-open');
   bigPicture.querySelector('.big-picture__img img').src = item.url;
   bigPicture.querySelector('.social__caption').textContent = item.description;
   bigPicture.querySelector('.likes-count').textContent = item.likes;
   bigPicture.querySelector('.comments-count').textContent = item.comments.length;
+  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('hidden');
   createComments(item);
   exitButton.addEventListener('click', () => {
     bigPicture.classList.add('hidden');
+    bigPicture.classList.remove('modal-open');
   });
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       bigPicture.classList.add('hidden');
+      bigPicture.classList.remove('modal-open');
     }
   });
 };
 
 const showBigPicture = (pictures) => {
-
   insertionPicturePoint.addEventListener('click', (evt) => {
     const pictureField = evt.target.closest('[data-picture-id]');
     if (!pictureField) {
@@ -50,7 +55,6 @@ const showBigPicture = (pictures) => {
     );
     openBigPicture(image);
   });
-
 };
 
 export {showBigPicture};
