@@ -24,7 +24,7 @@ const createComments = (data) => {
 const openBigPicture = (item) => {
   bigPicture.classList.remove('hidden');
   commentsContainer.innerHTML = '';
-  bigPicture.classList.add('modal-open');
+  document.body.classList.add('modal-open');
   bigPicture.querySelector('.big-picture__img img').src = item.url;
   bigPicture.querySelector('.social__caption').textContent = item.description;
   bigPicture.querySelector('.likes-count').textContent = item.likes;
@@ -34,12 +34,12 @@ const openBigPicture = (item) => {
   createComments(item);
   exitButton.addEventListener('click', () => {
     bigPicture.classList.add('hidden');
-    bigPicture.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
   });
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       bigPicture.classList.add('hidden');
-      bigPicture.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
     }
   });
 };
