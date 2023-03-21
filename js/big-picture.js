@@ -8,8 +8,8 @@ const exitButton = bigPicture.querySelector('.big-picture__cancel');
 
 //Создает шаблон нового коммента
 const createCommentElement = ({message, avatar}) => {
-  const commentsTamplate = document.querySelector('#picture__comment').content;
-  const createdComment = commentsTamplate.cloneNode(true);
+  const commentsTemplate = document.querySelector('#picture__comment').content;
+  const createdComment = commentsTemplate.cloneNode(true);
   createdComment.querySelector('.social__picture').src = avatar;
   createdComment.querySelector('.social__text').textContent = message;
   return createdComment;
