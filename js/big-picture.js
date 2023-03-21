@@ -1,48 +1,65 @@
-//const body =
+import {isEscapeKey} from './util.js';
+
 const insertionPicturePoint = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureInfo = document.querySelector('.big-picture__social');
 const commentsContainer = bigPictureInfo.querySelector('.social__comments');
 const exitButton = bigPicture.querySelector('.big-picture__cancel');
 
+//Создает шаблон нового коммента
+const createCommentElement = ({message, avatar}) => {
+  const commentsTamplate = document.querySelector('#picture__comment').content;
+  const createdComment = commentsTamplate.cloneNode(true);
+  createdComment.querySelector('.social__picture').src = avatar;
+  createdComment.querySelector('.social__text').textContent = message;
+  return createdComment;
+};
+
+//Создает комменты
 const createComments = (data) => {
   data.comments.forEach((element) => {
-    const commentP = document.createElement('p');
-    commentP.className = 'social__text';
-    commentP.textContent = element.message;
-    const commentImg = document.createElement('img');
-    commentImg.className = 'social__picture';
-    commentImg.src = element.avatar;
-    const commentLi = document.createElement('li');
-    commentLi.className = 'social__comment';
-    commentLi.append(commentImg);
-    commentLi.append(commentP);
-    commentsContainer.append(commentLi);
+    commentsContainer.append(createCommentElement(element));
   });
 };
 
-const openBigPicture = (item) => {
-  bigPicture.classList.remove('hidden');
+//Создает полноэкранное изображение
+const createBigPicture = ({url, description, likes, comments}) => {
   commentsContainer.innerHTML = '';
-  document.body.classList.add('modal-open');
-  bigPicture.querySelector('.big-picture__img img').src = item.url;
-  bigPicture.querySelector('.social__caption').textContent = item.description;
-  bigPicture.querySelector('.likes-count').textContent = item.likes;
-  bigPicture.querySelector('.comments-count').textContent = item.comments.length;
+  bigPicture.querySelector('.big-picture__img img').src = url;
+  bigPicture.querySelector('.social__caption').textContent = description;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__comment-count').classList.add('hidden');
   bigPicture.querySelector('.comments-loader').classList.add('hidden');
-  createComments(item);
+  createComments({comments});
+};
+
+//Функция обработчика
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
+
+//Функция закрытия окна, задана декларативно, чтоб можно было использовать в функции обработчика
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+//Функция открытия окна
+const openBigPicture = (data) => {
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  createBigPicture(data);
   exitButton.addEventListener('click', () => {
     bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
   });
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      bigPicture.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-    }
-  });
+  document.addEventListener('keydown', onDocumentKeydown);
 };
+
 
 const showBigPicture = (pictures) => {
   insertionPicturePoint.addEventListener('click', (evt) => {

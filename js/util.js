@@ -20,4 +20,7 @@ const createIdGenerator = () => {
 //Функция получения рандомного значения из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, createIdGenerator, getRandomArrayElement};
+//Функция проверки клавиши Esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, createIdGenerator, getRandomArrayElement, isEscapeKey};
