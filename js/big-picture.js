@@ -54,10 +54,7 @@ const openBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   createBigPicture(data);
-  exitButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  });
+  exitButton.addEventListener('click', closeBigPicture);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
