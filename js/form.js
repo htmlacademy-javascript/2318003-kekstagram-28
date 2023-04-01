@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {createValidator, validate, destroyValidator} from './validator.js';
+import {createValidator, onFormSubmit, destroyValidator} from './validator.js';
 
 
 const form = document.querySelector('.img-upload__form');
@@ -15,12 +15,6 @@ const onCloseButtonKeydown = (evt) => {
   }
 };
 
-const onFormSubmit = (evt) => {
-  if (!validate()) {
-    evt.preventDefault();
-  }
-};
-
 
 //Действия при закрытии
 function closeLoadingForm () {
@@ -33,6 +27,7 @@ function closeLoadingForm () {
   destroyValidator();
 }
 
+
 //Действия при открытии
 const openLoadingForm = () => {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
@@ -41,6 +36,9 @@ const openLoadingForm = () => {
   document.addEventListener('keydown', onCloseButtonKeydown);
   form.addEventListener('submit', onFormSubmit);
   //Убирает возможность выхода, когда поля не в фокусе
+  if (document.activeElement.tagName === 'input') {
+    document.removeEventListener('keydown', onCloseButtonKeydown);
+  }
   hashtagInput.addEventListener('focus', () => {
     document.removeEventListener('keydown', onCloseButtonKeydown);
   });

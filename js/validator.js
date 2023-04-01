@@ -10,10 +10,13 @@ const HASHTAG_REG_EXP = /^#[a-zа-яё0-9]{1,19}$/;
 
 const HASHTAG_FIRST_SYMBOL_REG_EXP = /^#/;
 
-const HASHTAG_CONTENT_REG_EXP = /^[a-zа-яё0-9]$/;
+const HASHTAG_CONTENT_REG_EXP = /[a-zа-яё0-9]/;
 
-const HASHTAG_LENGTH_REG_EXP = /^.{1,19}$/;
-
+const ERROR_HASHTAG_REPEAT = 'Хэштеги не должны повторяться';
+const ERROR_HASHTAG_COUNT = 'Хэштегов может быть не более 5 штук';
+const ERROR_HASHTAG_START = 'Хэштег должен начинаться с "#"';
+const ERROR_HASHTAG_CONTENT = 'Хэштег должен содержать только буквы латинского и русского алфавита или цифры';
+const ERROR_HASHTAG_LENGTH = 'Хэштег должен быть от 1 до 19 символов';
 
 const isValidHashTags = (hashtags) => {
   if (!hashtags) {
@@ -26,25 +29,25 @@ const isValidHashTags = (hashtags) => {
   }
 };
 
-const errorMessage = (hashtags) => {
-  const splitHashTags = hashtags.toLowerCase().split(' ');
+const defineErrorMessage = (hashtags) => {
+  const splitHashTags = hashtags.toLowerCase().trim().split(' ');
   const splitHashTagsSet = new Set(splitHashTags);
-  if (!(splitHashTagsSet.size === splitHashTags.length)) {
-    return 'Хэштеги не должны повторяться';
+  if (splitHashTagsSet.size !== splitHashTags.length) {
+    return ERROR_HASHTAG_REPEAT;
   }
   if (splitHashTags.length > MAX_HASHTAG_COUNT) {
-    return 'Хэштегов может быть не более 5 штук';
+    return ERROR_HASHTAG_COUNT;
   }
   if (splitHashTagsSet.size === splitHashTags.length && splitHashTags.length <= MAX_HASHTAG_COUNT) {
     for (let i = 0; i <= splitHashTags.length; i++) {
       if (!(HASHTAG_FIRST_SYMBOL_REG_EXP.test(splitHashTags[i]))) {
-        return 'Хэштег должен начинаться с "#"';
+        return ERROR_HASHTAG_START;
       }
       if (!(HASHTAG_CONTENT_REG_EXP.test(splitHashTags[i]))) {
-        return 'Хэштег должен содержать только буквы латинского и русского алфавита или цифры';
+        return ERROR_HASHTAG_CONTENT;
       }
-      if (!(HASHTAG_LENGTH_REG_EXP.test(splitHashTags[i]))) {
-        return 'Хэштег быть от 1 до 19 символов';
+      if (splitHashTags[i].length < 2 && splitHashTags[i].length > 20) {
+        return ERROR_HASHTAG_LENGTH;
       }
     }
   }
@@ -62,7 +65,7 @@ const pristine = new Pristine(form, {
 });
 
 const createValidator = () => {
-  pristine.addValidator(hashtagInput, isValidHashTags, errorMessage);
+  pristine.addValidator(hashtagInput, isValidHashTags, defineErrorMessage);
   pristine.addValidator(commentInput, isValidComment, 'Длина комментария должна быть < 140 символов');
 };
 
@@ -72,6 +75,11 @@ const destroyValidator = () => {
   }
 };
 
-const validate = () => pristine.validate();
+const onFormSubmit = (evt) => {
+  if (!pristine.validate()) {
+    evt.preventDefault();
+  }
+};
 
-export {createValidator, validate, destroyValidator};
+
+export {createValidator, onFormSubmit, destroyValidator};
