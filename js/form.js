@@ -9,7 +9,8 @@ const commentInput = document.querySelector('.text__description');
 
 //Закрытие на esc
 const onCloseButtonKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  const hasActiveElement = document.activeElement === commentInput || document.activeElement === hashtagInput;
+  if (isEscapeKey(evt) && !hasActiveElement) {
     evt.preventDefault();
     closeLoadingForm();
   }
@@ -21,7 +22,6 @@ function closeLoadingForm () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
   form.reset();
-  //pristine.reset();
   closeButton.removeEventListener('click', closeLoadingForm);
   document.removeEventListener('keydown', onCloseButtonKeydown);
   destroyValidator();
@@ -35,23 +35,6 @@ const openLoadingForm = () => {
   closeButton.addEventListener('click', closeLoadingForm);
   document.addEventListener('keydown', onCloseButtonKeydown);
   form.addEventListener('submit', onFormSubmit);
-  //Убирает возможность выхода, когда поля не в фокусе
-  if (document.activeElement.tagName === 'input') {
-    document.removeEventListener('keydown', onCloseButtonKeydown);
-  }
-  hashtagInput.addEventListener('focus', () => {
-    document.removeEventListener('keydown', onCloseButtonKeydown);
-  });
-  commentInput.addEventListener('focus', () => {
-    document.removeEventListener('keydown', onCloseButtonKeydown);
-  });
-  //Возвращает возможность выхода, когда поля не в фокусе
-  hashtagInput.addEventListener('blur', () => {
-    document.addEventListener('keydown', onCloseButtonKeydown);
-  });
-  commentInput.addEventListener('blur', () => {
-    document.addEventListener('keydown', onCloseButtonKeydown);
-  });
   createValidator();
 };
 
