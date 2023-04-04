@@ -2,15 +2,15 @@ const SLIDER_MIN = 0;
 const SLIDER_MAX = 100;
 const SLIDER_STEP = 1;
 
-const EFFECTS = [
-  {class: 'effects__preview--none', style: ''},
-  {class: 'effects__preview--chrome', style: 'grayscale', min: 0, max: 1, step: 0.1, dimention: ''},
-  {class: 'effects__preview--sepia', style: 'sepia', min: 0, max: 1, step: 0.1, dimention: ''},
-  {class: 'effects__preview--marvin', style: 'invert', min: 0, max: 100, step: 1, dimention: '%'},
-  {class: 'effects__preview--phobos', style: 'blur', min: 0, max: 3, step: 0.1, dimention: 'px'},
-  {class: 'effects__preview--heat', style: 'brightness', min: 1, max: 3, step: 0.1, dimention: ''}];
+const EFFECTS = {'effect-none': ['effects__preview--none', ''],
+  'effect-chrome': ['effects__preview--chrome', 'grayscale', 0, 1, 0.1, ''],
+  'effect-sepia': ['effects__preview--sepia', 'sepia', 0, 1, 0.1, ''],
+  'effect-marvin': ['effects__preview--marvin', 'invert', 0, 100, 1, '%'],
+  'effect-phobos': ['effects__preview--phobos', 'blur', 0, 3, 0.1, 'px'],
+  'effect-heat': ['effects__preview--heat', 'brightness', 1, 3, 0.1, '']
+};
 
-const DEFAULT_EFFECT = EFFECTS[0];
+const DEFAULT_EFFECT = EFFECTS['effect-none'];
 
 const effectList = document.querySelector('.effects__list');
 const effectSliderLevel = document.querySelector('.effect-level__slider');
@@ -19,44 +19,47 @@ const effectContainerLevel = document.querySelector('.img-upload__effect-level')
 const imgUploadPreview = document.querySelector('.img-upload__preview  img');
 
 const createDefaultSetup = () => {
-  imgUploadPreview.className = DEFAULT_EFFECT.class;
-  imgUploadPreview.style = DEFAULT_EFFECT.style;
+  imgUploadPreview.className = DEFAULT_EFFECT[0];
+  imgUploadPreview.style = DEFAULT_EFFECT[1];
+  imgUploadPreview.id = 'effect-none';
   effectLevelValue.value = '100%';
 };
 
-const onEffectClick = (evt) => {
-  if (evt.target.matches('.effects__preview--none')) {
+const createEditedSetup = (currentEffect, id) => {
+  imgUploadPreview.className = currentEffect[0];
+  imgUploadPreview.id = id;
+  imgUploadPreview.style.filter = `${currentEffect[1]}(${currentEffect[3]}${currentEffect[5]})`;
+  effectSliderLevel.noUiSlider.updateOptions({
+    range: {
+      min: currentEffect[2],
+      max: currentEffect[3]
+    },
+    start: currentEffect[3],
+    step: currentEffect[4],
+  });
+  effectSliderLevel.noUiSlider.set(currentEffect[3]);
+};
+
+const onEffectChange = (evt) => {
+  if (evt.target.id === 'effect-none') {
     effectContainerLevel.classList.add('hidden');
     createDefaultSetup();
-  }else if (evt.target.matches('.effects__preview')) {
+  } else {
     effectContainerLevel.classList.remove('hidden');
-    const currentEffect = EFFECTS.find((effect) => evt.target.matches(`.${effect.class}`));
-    if (currentEffect) {
-      imgUploadPreview.className = currentEffect.class;
-      imgUploadPreview.style.filter = `${currentEffect.style}(${currentEffect.max}${currentEffect.dimention})`;
-      effectSliderLevel.noUiSlider.updateOptions({
-        range: {
-          min: currentEffect.min,
-          max: currentEffect.max
-        },
-        start: currentEffect.max,
-        step: currentEffect.step,
-      });
-      effectSliderLevel.noUiSlider.set(currentEffect.max);
-    }
+    const currentEffect = EFFECTS[evt.target.id];
+    createEditedSetup(currentEffect, evt.target.id);
   }
 };
 
 const onSliderUpdate = () => {
   const sliderValue = effectSliderLevel.noUiSlider.get();
   effectLevelValue.value = sliderValue;
-  const currentEffectClass = imgUploadPreview.className;
-  const currentEffect = EFFECTS.find((effect) => effect.class === currentEffectClass);
-  if (currentEffect) {
-    imgUploadPreview.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.dimention})`;
+  const currentEffectId = imgUploadPreview.id;
+  const currentEft = EFFECTS[currentEffectId];
+  if (currentEft) {
+    imgUploadPreview.style.filter = `${currentEft[1]}(${sliderValue}${currentEft[5]})`;
   }
 };
-
 
 const createSlider = () => {
   createDefaultSetup();
@@ -71,14 +74,13 @@ const createSlider = () => {
   });
   effectContainerLevel.classList.add('hidden');
   effectSliderLevel.noUiSlider.on('update', onSliderUpdate);
-  effectList.addEventListener('click', onEffectClick);
+  effectList.addEventListener('change', onEffectChange);
 };
 
 const destroySlider = () => {
   effectSliderLevel.noUiSlider.off('update', onSliderUpdate);
   effectSliderLevel.noUiSlider.destroy();
-  effectList.removeEventListener('click', onEffectClick);
+  effectList.removeEventListener('change', onEffectChange);
 };
-
 
 export {createSlider, destroySlider};
