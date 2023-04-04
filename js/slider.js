@@ -48,7 +48,7 @@ const createDefaultSetup = () => {
   imgUploadPreview.className = DEFAULT_EFFECT.class;
   imgUploadPreview.style.filter = DEFAULT_EFFECT.style;
   imgUploadPreview.id = 'effect-none';
-  effectLevelValue.value = '100%';
+  effectLevelValue.value = `${SLIDER_MAX}%`;
 };
 
 const createEditedSetup = (currentEffect, id) => {
