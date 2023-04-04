@@ -16,7 +16,7 @@ const onChangeScaleClickEvent = (evt) => {
     currentScale += SCALE_STEP_VALUE;
   }
   scaleValue.value = `${currentScale}%`;
-  document.querySelector('.img-upload__preview').style.transform = `scale(${currentScale / 100})`;
+  document.querySelector('.img-upload__preview  img').style.transform = `scale(${currentScale / 100})`;
 };
 
 const scaleChangeCreate = () => {
