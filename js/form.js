@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
-import {createValidator, onFormSubmit, destroyValidator} from './validator.js';
+import {createValidator, onFormSubmit} from './validator.js';
+import {scaleChangeCreate, scaleChangeDestroy} from './scale.js';
+import {createSlider, destroySlider} from './slider.js';
 
 
 const form = document.querySelector('.img-upload__form');
@@ -24,7 +26,8 @@ function closeLoadingForm () {
   form.reset();
   closeButton.removeEventListener('click', closeLoadingForm);
   document.removeEventListener('keydown', onCloseButtonKeydown);
-  destroyValidator();
+  scaleChangeDestroy();
+  destroySlider();
 }
 
 
@@ -36,6 +39,8 @@ const openLoadingForm = () => {
   document.addEventListener('keydown', onCloseButtonKeydown);
   form.addEventListener('submit', onFormSubmit);
   createValidator();
+  scaleChangeCreate();
+  createSlider();
 };
 
 //Итог
