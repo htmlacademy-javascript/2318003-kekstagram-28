@@ -4,6 +4,7 @@ const commentInput = document.querySelector('.text__description');
 const form = document.querySelector('.img-upload__form');
 
 const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENT_LENGTH = 140;
 
 //Регулярка для проверки 1 хештега
 const HASHTAG_REG_EXP = /^#[a-zа-яё0-9]{1,19}$/;
@@ -53,33 +54,34 @@ const defineErrorMessage = (hashtags) => {
   }
 };
 
-const isValidComment = (comment) => {
-  if (!comment || comment.length <= 140) {
-    return true;
-  }
-};
+const isValidComment = (comment) => comment.length <= MAX_COMMENT_LENGTH;
 
-const pristine = new Pristine(form, {
+let pristine = {};
+
+/* const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-});
+  errorTextParent:'img-upload__field-wrapper',
+  errorTextClass:'img-upload__field-wrapper--error',
+}); */
+
 
 const createValidator = () => {
+
+  pristine = new Pristine(form, {
+    classTo: 'img-upload__field-wrapper',
+    errorTextParent:'img-upload__field-wrapper',
+    errorTextClass:'img-upload__field-wrapper--error',
+  });
+
   pristine.addValidator(hashtagInput, isValidHashTags, defineErrorMessage);
   pristine.addValidator(commentInput, isValidComment, 'Длина комментария должна быть < 140 символов');
 };
 
-const destroyValidator = () => {
-  if (pristine) {
-    pristine.destroy();
-  }
-};
+//const destroyValidator = () => pristine.reset();
 
-const onFormSubmit = (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
+const isValidPristine = () => {
+  pristine.validate();
 };
 
 
-export {createValidator, onFormSubmit, destroyValidator};
+export {createValidator, isValidPristine,/*  destroyValidator */};

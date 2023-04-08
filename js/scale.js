@@ -21,7 +21,7 @@ const onChangeScaleClickEvent = (evt) => {
 
 const scaleChangeCreate = () => {
   document.querySelector('.scale__control--value').value = `${100}%`;
-  document.querySelector('.img-upload__preview').style.transform = 'scale(1)';
+  document.querySelector('.img-upload__preview  img').style.transform = 'scale(1)';
   smallerButton.addEventListener('click', onChangeScaleClickEvent);
   biggerButton.addEventListener('click', onChangeScaleClickEvent);
 };

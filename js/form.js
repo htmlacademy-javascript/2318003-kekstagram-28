@@ -1,7 +1,8 @@
-import {isEscapeKey} from './util.js';
-import {createValidator, onFormSubmit} from './validator.js';
+import {isEscapeKey, showSuccessMessage, showErrorMessage} from './util.js';
+import {createValidator, isValidPristine, /* destroyValidator */} from './validator.js';
 import {scaleChangeCreate, scaleChangeDestroy} from './scale.js';
 import {createSlider, destroySlider} from './slider.js';
+import {sendData} from './api.js';
 
 
 const form = document.querySelector('.img-upload__form');
@@ -18,14 +19,31 @@ const onCloseButtonKeydown = (evt) => {
   }
 };
 
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = isValidPristine();
+    if (isValid) {
+      sendData(new FormData(evt.target))
+        .then(() => {
+          showSuccessMessage();
+          onSuccess();
+        })
+        .catch(() => {
+          showErrorMessage();
+        });
+    }
+  });
+};
+
 
 //Действия при закрытии
 function closeLoadingForm () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
-  form.reset();
   closeButton.removeEventListener('click', closeLoadingForm);
   document.removeEventListener('keydown', onCloseButtonKeydown);
+  //destroyValidator();
   scaleChangeDestroy();
   destroySlider();
 }
@@ -37,7 +55,8 @@ const openLoadingForm = () => {
   document.body.classList.add('modal-open');
   closeButton.addEventListener('click', closeLoadingForm);
   document.addEventListener('keydown', onCloseButtonKeydown);
-  form.addEventListener('submit', onFormSubmit);
+  setUserFormSubmit(closeLoadingForm);
+  form.reset();
   createValidator();
   scaleChangeCreate();
   createSlider();

@@ -1,8 +1,13 @@
-import {createPhotoDescription} from './data.js';
-const insertionPictures = createPhotoDescription();
 import {renderPictures} from './miniature.js';
-renderPictures(insertionPictures);
 import {showBigPicture} from './big-picture.js';
-showBigPicture(insertionPictures);
+import {getData} from './api.js';
+
+getData()
+  .then((userMiniature) => {
+    renderPictures(userMiniature);
+    showBigPicture(userMiniature);
+  });
+
+
 import {showLoadingForm} from './form.js';
 showLoadingForm();
