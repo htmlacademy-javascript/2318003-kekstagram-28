@@ -56,32 +56,16 @@ const defineErrorMessage = (hashtags) => {
 
 const isValidComment = (comment) => comment.length <= MAX_COMMENT_LENGTH;
 
-let pristine = {};
 
-/* const pristine = new Pristine(form, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
   errorTextClass:'img-upload__field-wrapper--error',
-}); */
+});
 
 
-const createValidator = () => {
-
-  pristine = new Pristine(form, {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent:'img-upload__field-wrapper',
-    errorTextClass:'img-upload__field-wrapper--error',
-  });
-
-  pristine.addValidator(hashtagInput, isValidHashTags, defineErrorMessage);
-  pristine.addValidator(commentInput, isValidComment, 'Длина комментария должна быть < 140 символов');
-};
-
-//const destroyValidator = () => pristine.reset();
-
-const isValidPristine = () => {
-  pristine.validate();
-};
+pristine.addValidator(hashtagInput, isValidHashTags, defineErrorMessage);
+pristine.addValidator(commentInput, isValidComment, 'Длина комментария должна быть < 140 символов');
 
 
-export {createValidator, isValidPristine,/*  destroyValidator */};
+export {pristine};

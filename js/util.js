@@ -24,7 +24,7 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 //Функция показа ошибки
-/* const ALERT_SHOW_TIME = 5;
+const ALERT_SHOW_TIME = 5000;
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -44,24 +44,6 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}; */
-
-const body = document.querySelector('body');
-
-//Успешная загрузка
-const showSuccessMessage = () => {
-  const templateSuccess = document.querySelector('#success').content;
-  const sectionSuccess = templateSuccess.querySelector('section');
-  const cloneSectionSuccess = sectionSuccess.cloneNode(true);
-  body.appendChild(cloneSectionSuccess);
 };
 
-//Загрузка с ошибкой
-const showErrorMessage = () => {
-  const templateError = document.querySelector('#error').content;
-  const sectionError = templateError.querySelector('section');
-  const cloneSectionError = sectionError.cloneNode(true);
-  body.appendChild(cloneSectionError);
-};
-
-export {getRandomInteger, createIdGenerator, getRandomArrayElement, isEscapeKey, showAlert, showSuccessMessage, showErrorMessage};
+export {getRandomInteger, createIdGenerator, getRandomArrayElement, isEscapeKey, showAlert};
