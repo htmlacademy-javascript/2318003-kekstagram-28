@@ -34,7 +34,7 @@ const setUserFormSubmit = (onSuccess) => {
         .catch(() => {
           showErrorMessage();
         })
-        .finally(unblockSubmitButton());
+        .finally(unblockSubmitButton);
     }
   });
 };

@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {onCloseButtonKeydown} from './form.js';
 
 const successMessage = document.querySelector('#success');
 const errorMessage = document.querySelector('#error');
@@ -13,6 +14,7 @@ const onMessageCloseEvent = (evt) => {
   }
 };
 
+
 //Успешная загрузка
 const showSuccessMessage = () => {
   const successMessageTemplate = successMessage.content.querySelector('.success');
@@ -22,11 +24,13 @@ const showSuccessMessage = () => {
   cloneSectionSuccess.addEventListener('click', onMessageCloseEvent);
 };
 
+
 //Загрузка с ошибкой
 const showErrorMessage = () => {
   const errorMessageTemplate = errorMessage.content.querySelector('.error');
   const cloneSectionError = errorMessageTemplate.cloneNode(true);
   document.body.appendChild(cloneSectionError);
+  document.removeEventListener('keydown', onCloseButtonKeydown);
   document.addEventListener('keydown', onMessageCloseEvent);
   cloneSectionError.addEventListener('click', onMessageCloseEvent);
 };
@@ -40,6 +44,7 @@ function closeMessage () {
   if (errorMessageElement) {
     errorMessageElement.remove();
   }
+  document.addEventListener('keydown', onCloseButtonKeydown);
   document.removeEventListener('keydown', onMessageCloseEvent);
 }
 
