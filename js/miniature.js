@@ -15,8 +15,10 @@ const createPicture = (picture) => {
 
 const renderPictures = (insertionPictures) => {
   const insertionPicturePoint = document.querySelector('.pictures');
+  insertionPicturePoint.querySelectorAll('.picture').forEach((item) => item.remove());
+
   const photosFragment = document.createDocumentFragment();
-  insertionPictures.forEach((element) => {
+  insertionPictures.slice().forEach((element) => {
     insertionPicturePoint.append(createPicture(element));
   });
   insertionPicturePoint.append(photosFragment);

@@ -48,4 +48,4 @@ const showLoadingForm = () => {
   document.querySelector('#upload-file').addEventListener('change', openLoadingForm);
 };
 
-export {showLoadingForm, closeLoadingForm};
+export {showLoadingForm, closeLoadingForm, onCloseButtonKeydown};

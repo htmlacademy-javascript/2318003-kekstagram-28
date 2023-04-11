@@ -1,9 +1,19 @@
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+
+
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+
+
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-const getData = () => fetch('https://28.javascript.pages.academy/kekstagram/data')
+
+const getData = () => fetch(`${BASE_URL}${Route.GET_DATA}`)
   .then((response) => {
     if (!response.ok) {
       throw new Error();
@@ -14,8 +24,9 @@ const getData = () => fetch('https://28.javascript.pages.academy/kekstagram/data
     throw new Error(ErrorText.GET_DATA);
   });
 
+
 const sendData = (body) => fetch(
-  'https://28.javascript.pages.academy/kekstagram',
+  `${BASE_URL}${Route.SEND_DATA}`,
   {
     method: 'POST',
     body,
