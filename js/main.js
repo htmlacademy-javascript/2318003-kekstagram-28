@@ -6,7 +6,7 @@ import {setUserFormSubmit} from './form-submit.js';
 import './validator.js';
 import {showLoadingForm, closeLoadingForm} from './form.js';
 import {getFiltredImages, init} from './add-filters.js';
-
+import {loadPhoto} from './photo-preview.js';
 
 try {
   const data = await getData();
@@ -17,7 +17,7 @@ try {
   showAlert('Не удалось загрузить данные с сервера. Перезагрузите страницу.');
 }
 
-
+loadPhoto();
 showLoadingForm();
 setUserFormSubmit(closeLoadingForm);
 
