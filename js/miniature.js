@@ -3,8 +3,9 @@ const createPicture = (picture) => {
     .content
     .querySelector('.picture');
   const createdPicture = pictureTemplate.cloneNode(true);
-  createdPicture.querySelector('.picture__img').src = picture.url;
-  createdPicture.querySelector('.picture__img').alt = picture.description;
+  const pictureImg = createdPicture.querySelector('.picture__img');
+  pictureImg.src = picture.url;
+  pictureImg.alt = picture.description;
   createdPicture.querySelector('.picture__likes').textContent = picture.likes;
   createdPicture.querySelector('.picture__comments').textContent = picture.comments.length;
   createdPicture.dataset.pictureId = picture.id;
