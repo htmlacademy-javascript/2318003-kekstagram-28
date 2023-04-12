@@ -1,4 +1,3 @@
-//Поле ввода хэштегов
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const form = document.querySelector('.img-upload__form');
@@ -6,18 +5,18 @@ const form = document.querySelector('.img-upload__form');
 const MAX_HASHTAG_COUNT = 5;
 const MAX_COMMENT_LENGTH = 140;
 
-//Регулярка для проверки 1 хештега
+
 const HASHTAG_REG_EXP = /^#[a-zа-яё0-9]{1,19}$/;
-
 const HASHTAG_FIRST_SYMBOL_REG_EXP = /^#/;
-
 const HASHTAG_CONTENT_REG_EXP = /[a-zа-яё0-9]/;
+
 
 const ERROR_HASHTAG_REPEAT = 'Хэштеги не должны повторяться';
 const ERROR_HASHTAG_COUNT = 'Хэштегов может быть не более 5 штук';
 const ERROR_HASHTAG_START = 'Хэштег должен начинаться с "#"';
 const ERROR_HASHTAG_CONTENT = 'Хэштег должен содержать только буквы латинского и русского алфавита или цифры';
 const ERROR_HASHTAG_LENGTH = 'Хэштег должен быть от 1 до 19 символов';
+
 
 const isValidHashTags = (hashtags) => {
   if (!hashtags) {
@@ -29,6 +28,7 @@ const isValidHashTags = (hashtags) => {
     return splitHashTags.every((hashtag) => HASHTAG_REG_EXP.test(hashtag));
   }
 };
+
 
 const defineErrorMessage = (hashtags) => {
   const splitHashTags = hashtags.toLowerCase().trim().split(' ');
@@ -53,6 +53,7 @@ const defineErrorMessage = (hashtags) => {
     }
   }
 };
+
 
 const isValidComment = (comment) => comment.length <= MAX_COMMENT_LENGTH;
 

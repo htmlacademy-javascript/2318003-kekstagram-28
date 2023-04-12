@@ -26,4 +26,5 @@ const renderPictures = (insertionPictures) => {
   return insertionPicturePoint;
 };
 
+
 export {renderPictures};

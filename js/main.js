@@ -8,14 +8,18 @@ import {showLoadingForm, closeLoadingForm} from './form.js';
 import {getFiltredImages, init} from './add-filters.js';
 import {loadPhoto} from './photo-preview.js';
 
+
+const getDataAlertMessage = 'Не удалось загрузить данные с сервера. Перезагрузите страницу.';
+
 try {
   const data = await getData();
   init(data);
   renderPictures(getFiltredImages());
   showBigPicture(getFiltredImages());
 } catch (err) {
-  showAlert('Не удалось загрузить данные с сервера. Перезагрузите страницу.');
+  showAlert(getDataAlertMessage);
 }
+
 
 loadPhoto();
 showLoadingForm();

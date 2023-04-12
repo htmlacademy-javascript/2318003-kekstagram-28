@@ -1,7 +1,6 @@
-//Функция проверки клавиши Esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-//Функция показа ошибки
+
 const ALERT_SHOW_TIME = 5000;
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -32,5 +31,6 @@ const debounce = (callback, timeoutDelay = 500) => {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
+
 
 export {isEscapeKey, showAlert, debounce};

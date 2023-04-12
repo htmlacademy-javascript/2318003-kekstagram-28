@@ -10,7 +10,6 @@ let currentComments = 0;
 let onLoadCommentsButton = null;
 
 
-//Создает шаблон нового коммента
 const createCommentElement = ({message, avatar}) => {
   const commentsTemplate = document.querySelector('#picture__comment').content;
   const createdComment = commentsTemplate.cloneNode(true);
@@ -19,14 +18,14 @@ const createCommentElement = ({message, avatar}) => {
   return createdComment;
 };
 
-//Создает комменты
+
 const createComments = (data) => {
   data.forEach((element) => {
     commentsContainer.append(createCommentElement(element));
   });
 };
 
-//Добавляем загрузку комментов по 5 шт
+
 const initComments = (comments) => {
   const ADDED_COMMENTS_COUNT = 5;
   const allComments = comments.slice();
@@ -47,7 +46,6 @@ const initComments = (comments) => {
 };
 
 
-//Создает полноэкранное изображение
 const createBigPicture = ({url, description, likes, comments}) => {
   commentsContainer.innerHTML = '';
   bigPicture.querySelector('.big-picture__img img').src = url;
@@ -61,7 +59,6 @@ const createBigPicture = ({url, description, likes, comments}) => {
 };
 
 
-//Функция обработчика
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -69,7 +66,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-//Функция закрытия окна, задана декларативно, чтоб можно было использовать в функции обработчика
+
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -78,7 +75,7 @@ function closeBigPicture () {
   loadingCommentsButton.removeEventListener('click', onLoadCommentsButton);
 }
 
-//Функция открытия окна
+
 const openBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');

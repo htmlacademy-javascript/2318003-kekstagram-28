@@ -10,7 +10,6 @@ const hashtagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 
 
-//Закрытие на esc
 const onCloseButtonKeydown = (evt) => {
   const hasActiveElement = document.activeElement === commentInput || document.activeElement === hashtagInput;
   if (isEscapeKey(evt) && !hasActiveElement) {
@@ -20,7 +19,6 @@ const onCloseButtonKeydown = (evt) => {
 };
 
 
-//Действия при закрытии
 function closeLoadingForm () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -33,7 +31,6 @@ function closeLoadingForm () {
 }
 
 
-//Действия при открытии
 const openLoadingForm = () => {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -43,7 +40,7 @@ const openLoadingForm = () => {
   createSlider();
 };
 
-//Итог
+
 const showLoadingForm = () => {
   document.querySelector('#upload-file').addEventListener('change', openLoadingForm);
 };
