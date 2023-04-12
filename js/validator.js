@@ -3,6 +3,8 @@ const commentInput = document.querySelector('.text__description');
 const form = document.querySelector('.img-upload__form');
 
 const MAX_HASHTAG_COUNT = 5;
+const MIN_HASHTAG_LENGTH = 2;
+const MAX_HASHTAG_LENGTH = 20;
 const MAX_COMMENT_LENGTH = 140;
 
 
@@ -47,7 +49,7 @@ const defineErrorMessage = (hashtags) => {
       if (!(HASHTAG_CONTENT_REG_EXP.test(splitHashTags[i]))) {
         return ERROR_HASHTAG_CONTENT;
       }
-      if (splitHashTags[i].length < 2 && splitHashTags[i].length > 20) {
+      if (splitHashTags[i].length < MIN_HASHTAG_LENGTH && splitHashTags[i].length > MAX_HASHTAG_LENGTH) {
         return ERROR_HASHTAG_LENGTH;
       }
     }
