@@ -2,6 +2,7 @@ const fileChooser = document.querySelector('.img-upload__start input[type=file]'
 const preview = document.querySelector('.img-upload__preview  img');
 const miniPreview = document.querySelectorAll('.effects__preview');
 
+
 const loadPhoto = () => {
   fileChooser.addEventListener('change', () => {
     const file = fileChooser.files[0];
@@ -11,5 +12,6 @@ const loadPhoto = () => {
     });
   });
 };
+
 
 export {loadPhoto};

@@ -37,9 +37,9 @@ const getFiltredImages = () => {
 
 const onFilterClick = (cb) => {
   imgFiltersForm.addEventListener('click', (evt) => {
-    if (evt.target.id === 'filter-default' ||
-    evt.target.id === 'filter-random' ||
-    evt.target.id === 'filter-discussed') {
+    if (evt.target.id === Filter.DEFAULT ||
+    evt.target.id === Filter.RANDOM ||
+    evt.target.id === Filter.DISCUSSED) {
       document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
       currentFilter = evt.target.id;
