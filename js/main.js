@@ -9,7 +9,7 @@ import {getFiltredImages, init} from './add-filters.js';
 import {loadPhoto} from './photo-preview.js';
 
 
-const getDataAlertMessage = 'Не удалось загрузить данные с сервера. Перезагрузите страницу.';
+const GETTING_ALERT_MESSAGE = 'Не удалось загрузить данные с сервера. Перезагрузите страницу.';
 
 try {
   const data = await getData();
@@ -17,7 +17,7 @@ try {
   renderPictures(getFiltredImages());
   showBigPicture(getFiltredImages());
 } catch (err) {
-  showAlert(getDataAlertMessage);
+  showAlert(GETTING_ALERT_MESSAGE);
 }
 
 
