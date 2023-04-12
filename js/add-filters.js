@@ -35,11 +35,11 @@ const getFiltredImages = () => {
   }
 };
 
+const isFilterButton = (evt) => evt.target.id === Filter.DEFAULT || evt.target.id === Filter.RANDOM || evt.target.id === Filter.DISCUSSED;
+
 const onFilterClick = (cb) => {
   imgFiltersForm.addEventListener('click', (evt) => {
-    if (evt.target.id === Filter.DEFAULT ||
-    evt.target.id === Filter.RANDOM ||
-    evt.target.id === Filter.DISCUSSED) {
+    if (isFilterButton(evt)) {
       document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
       currentFilter = evt.target.id;
